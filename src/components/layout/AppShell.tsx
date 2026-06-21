@@ -5,6 +5,7 @@ import { loadAutosave, loadProject } from '../../utils/persistence';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { useArrangementPlayback } from '../../hooks/useArrangementPlayback';
 import { useUndoRedo } from '../../hooks/useUndoRedo';
+import { useTrackFxSync } from '../../hooks/useTrackFxSync';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { StatusBar } from './StatusBar';
@@ -50,6 +51,7 @@ export function AppShell() {
   useAutoSave();
   useArrangementPlayback();
   useUndoRedo();
+  useTrackFxSync();
 
   // Restore autosave on first load
   useEffect(() => {

@@ -18,6 +18,20 @@ export interface InstrumentPreset {
   params: Record<string, unknown>;
 }
 
+export interface TrackFxParams {
+  eqLow: number; eqMid: number; eqHigh: number;
+  reverbWet: number; reverbDecay: number;
+  delayWet: number; delayTime: number; delayFeedback: number;
+  compThreshold: number; compRatio: number; compEnabled: boolean;
+}
+
+export const DEFAULT_FX: TrackFxParams = {
+  eqLow: 0, eqMid: 0, eqHigh: 0,
+  reverbWet: 0, reverbDecay: 2,
+  delayWet: 0, delayTime: 0.25, delayFeedback: 0.3,
+  compThreshold: -24, compRatio: 4, compEnabled: false,
+};
+
 export interface InstrumentData {
   id: string;
   name: string;
@@ -27,6 +41,7 @@ export interface InstrumentData {
   pan: number;     // -1 to 1
   muted: boolean;
   solo: boolean;
+  fx: TrackFxParams;
 }
 
 // Default synth presets
@@ -314,6 +329,7 @@ interface InstrumentState {
   addInstrument: (type: InstrumentType, name?: string) => string;
   removeInstrument: (id: string) => void;
   updateInstrument: (id: string, updates: Partial<InstrumentData>) => void;
+  updateInstrumentFx: (id: string, fxUpdates: Partial<TrackFxParams>) => void;
   setSelectedInstrumentId: (id: string | null) => void;
   setInstrumentPreset: (instrumentId: string, presetId: string) => void;
   getInstrument: (id: string) => InstrumentData | undefined;
@@ -384,6 +400,7 @@ export const useInstrumentStore = create<InstrumentState>((set, get) => ({
       pan: 0,
       muted: false,
       solo: false,
+      fx: { ...DEFAULT_FX },
     };
 
     set((s) => ({
@@ -405,6 +422,14 @@ export const useInstrumentStore = create<InstrumentState>((set, get) => ({
     set((s) => ({
       instruments: s.instruments.map((i) =>
         i.id === id ? { ...i, ...updates } : i
+      ),
+    }));
+  },
+
+  updateInstrumentFx: (id, fxUpdates) => {
+    set((s) => ({
+      instruments: s.instruments.map((i) =>
+        i.id === id ? { ...i, fx: { ...i.fx, ...fxUpdates } } : i
       ),
     }));
   },

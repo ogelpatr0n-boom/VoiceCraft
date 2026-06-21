@@ -9,7 +9,13 @@ export type InstrumentType =
   | 'arpeggiator'
   | 'plucked-string'
   | 'bowed-string'
-  | 'pedal-steel';
+  | 'pedal-steel'
+  | 'pad-synth'
+  | 'lead-synth'
+  | 'sub-bass-808'
+  | 'electric-piano'
+  | 'hammond-organ'
+  | 'granular-synth';
 
 export interface InstrumentPreset {
   id: string;
@@ -376,6 +382,12 @@ export const useInstrumentStore = create<InstrumentState>((set, get) => ({
       'plucked-string': 'Guitar',
       'bowed-string': 'Fiddle',
       'pedal-steel': 'Pedal Steel',
+      'pad-synth': 'Pad',
+      'lead-synth': 'Lead',
+      'sub-bass-808': '808 Sub',
+      'electric-piano': 'E-Piano',
+      'hammond-organ': 'Organ',
+      'granular-synth': 'Granular',
     };
     const defaultName = name ?? `${typeNames[type]} ${instrumentCount + 1}`;
 
@@ -389,6 +401,12 @@ export const useInstrumentStore = create<InstrumentState>((set, get) => ({
       'plucked-string': 'plucked-acoustic',
       'bowed-string': 'bowed-fiddle',
       'pedal-steel': 'pedal-classic',
+      'pad-synth': '',
+      'lead-synth': '',
+      'sub-bass-808': '',
+      'electric-piano': '',
+      'hammond-organ': '',
+      'granular-synth': '',
     };
 
     const instrument: InstrumentData = {

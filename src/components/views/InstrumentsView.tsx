@@ -27,6 +27,12 @@ import {
   createBowedString,
   createPedalSteel,
 } from '../../audio/instruments/string-instruments';
+import { PadSynth } from '../../audio/instruments/pad-synth';
+import { LeadSynth } from '../../audio/instruments/lead-synth';
+import { SubBass808 } from '../../audio/instruments/sub-bass-808';
+import { ElectricPiano } from '../../audio/instruments/electric-piano';
+import { HammondOrgan } from '../../audio/instruments/hammond-organ';
+import { GranularSynth } from '../../audio/instruments/granular-synth';
 import { clipScheduler } from '../../audio/clips/clip-scheduler';
 import { midiInput } from '../../audio/midi/midi-input';
 import { Knob } from '../controls/Knob';
@@ -42,7 +48,13 @@ type InstrumentInstance =
   | Arpeggiator
   | PluckedStringSynth
   | BowedStringSynth
-  | PedalSteelSynth;
+  | PedalSteelSynth
+  | PadSynth
+  | LeadSynth
+  | SubBass808
+  | ElectricPiano
+  | HammondOrgan
+  | GranularSynth;
 
 export function InstrumentsView() {
   const instruments = useInstrumentStore((s) => s.instruments);
@@ -180,6 +192,24 @@ export function InstrumentsView() {
                 break;
               case 'pedal-steel':
                 instance = createPedalSteel(data.name);
+                break;
+              case 'pad-synth':
+                instance = new PadSynth(data.name);
+                break;
+              case 'lead-synth':
+                instance = new LeadSynth(data.name);
+                break;
+              case 'sub-bass-808':
+                instance = new SubBass808(data.name);
+                break;
+              case 'electric-piano':
+                instance = new ElectricPiano(data.name);
+                break;
+              case 'hammond-organ':
+                instance = new HammondOrgan(data.name);
+                break;
+              case 'granular-synth':
+                instance = new GranularSynth(data.name);
                 break;
               default:
                 instance = createSynth(data.name);
